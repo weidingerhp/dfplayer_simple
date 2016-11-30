@@ -16,6 +16,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMp3Player.ino" />
+    <None Include="readme.md" />
   </ItemGroup>
- 
+  <ItemGroup>
+    <ClInclude Include="MP3Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="__vm\.SimpleMp3Player.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MP3Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
