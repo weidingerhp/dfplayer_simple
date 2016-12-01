@@ -18,10 +18,13 @@ extern void dfPlayerInit(SoftwareSerial &serial);
 // function prototype would be: 
 // void myCallbackFunc(byte cmd, byte par1, byte par2)
 // where cmd would be the command (e.g. 0x40 for an error) and par1, par2 would be the parameter
-
 typedef void (*dfPlayerCallbackFunc)(byte, byte, byte);
 
 extern void dfPlayerSetCallbackFunc(dfPlayerCallbackFunc func);
+
+// Here you can register a special function that will be called if a given code is received.
+// eg: you can register a special handler for 0x3a (card removed)
+extern void dfPlayerSetSpecialCallbackFunc(byte code, dfPlayerCallbackFunc func);
 
 // this needs to be called in the loop function of your INO-File.
 extern bool dfPlayerLoop();

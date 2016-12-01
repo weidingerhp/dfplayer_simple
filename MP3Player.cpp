@@ -9,6 +9,8 @@ SoftwareSerial *dfPlayerSerialPort = NULL;
 dfPlayerCallbackFunc dfPlayerCallback = NULL;
 byte dfPlayerInputBuffer[10];
 
+dfPlayerCallbackFunc dfPlayerSpecialCallbacks[0x50];
+
 # define DFP_Start_Byte 0x7E
 # define DFP_Version_Byte 0xFF
 # define DFP_Command_Length 0x06
@@ -18,11 +20,17 @@ byte dfPlayerInputBuffer[10];
 
 void dfPlayerInit(SoftwareSerial &serial) {
 	dfPlayerSerialPort = &serial;
+	memset(dfPlayerSpecialCallbacks, 0, sizeof(dfPlayerSpecialCallbacks));
 }
 
 
 void dfPlayerSetCallbackFunc(dfPlayerCallbackFunc func) {
 	dfPlayerCallback = func;
+}
+
+void dfPlayerSetSpecialCallbackFunc(byte code, dfPlayerCallbackFunc func) {
+	if (code > 0x4f) return;
+	dfPlayerSpecialCallbacks[code] = func;
 }
 
 int16_t dfPlayerCalculateCheckSum(byte cmd, byte par1, byte par2) {
@@ -40,7 +48,13 @@ bool dfPlayerLoop() {
 			dfPlayerInputBuffer[k] = dfPlayerSerialPort->read();
 		}
 		// TODO: we could check the checksum-word here
-		dfPlayerCallback(dfPlayerInputBuffer[3], dfPlayerInputBuffer[5], dfPlayerInputBuffer[6]);
+
+		byte code = dfPlayerInputBuffer[3];
+		if (dfPlayerSpecialCallbacks[code] != NULL) {
+			dfPlayerSpecialCallbacks[code](code, dfPlayerInputBuffer[5], dfPlayerInputBuffer[6]);
+		} else {
+			dfPlayerCallback(code, dfPlayerInputBuffer[5], dfPlayerInputBuffer[6]);
+		}
 		return true;
 	}
 }
