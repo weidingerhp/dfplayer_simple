@@ -1,0 +1,20 @@
+{
+"name": "dfplayer_simple",
+"frameworks": "Arduino",
+"keywords": "DFPlayer",
+"description": "Simple Framework to talk to DFPlayer with SoftwareSerial",
+"authors":
+[
+    {
+        "name": "Hans-Peter.Weidinger",
+        "email": "hpw@hp-weidinger.at",
+        "url": "http://www.hp-weidinger.at/",
+        "maintainer": true
+    }
+],
+"repository":
+{
+    "type": "git",
+    "url": "https://github.com/weidingerhp/dfplayer_simple"
+}
+}
