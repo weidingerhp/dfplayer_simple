@@ -82,24 +82,6 @@ void loop() {
   // put your main code here, to run repeatedly:
   dfPlayerLoop();
   checkbt();
-  bouncer.update();
-  bool fell = bouncer.fell();
-  if(fell) {
-    if(play==0) {
-      play = 1;
-      if(firststart==0) {
-          firststart=1;
-          playFolder(current_folder);
-        }
-        else {
-          resume();
-        }
-    }
-    else {
-      play=0;
-      pause();
-    }
-  }
 }
 
 void pause() {
@@ -129,6 +111,24 @@ void checkbt() {
       if (!a) {
         playFolder(i + 1);
       }
+    }
+  }
+  bouncer.update();
+  bool fell = bouncer.fell();
+  if(fell) {
+    if(play==0) {
+      play = 1;
+      if(firststart==0) {
+          firststart=1;
+          playFolder(current_folder);
+        }
+        else {
+          resume();
+        }
+    }
+    else {
+      play=0;
+      pause();
     }
   }
 }
